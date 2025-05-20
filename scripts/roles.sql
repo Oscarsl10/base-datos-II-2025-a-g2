@@ -1,13 +1,13 @@
 -- ADMINISTRADOR GIMNASIO
 
-CREATE USER admin WITH PASSWORD 'admin123';
+CREATE USER admin_gym WITH PASSWORD 'admin123';
 CREATE ROLE admin_gimnasio;
 
 -- Asignación de rol
-GRANT admin_gimnasio TO admin;
+GRANT admin_gimnasio TO admin_gym;
 
 -- Permisos
-GRANT CONNECT ON DATABASE gimnasio TO admin_gimnasio;
+GRANT CONNECT ON DATABASE gimnasio_db TO admin_gimnasio;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO admin_gimnasio;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO admin_gimnasio;
 
@@ -18,7 +18,7 @@ CREATE USER recepcionista WITH PASSWORD 'recep123';
 CREATE ROLE recepcionista_role;
 GRANT recepcionista_role TO recepcionista;
 
-GRANT CONNECT ON DATABASE gimnasio TO recepcionista_role;
+GRANT CONNECT ON DATABASE gimnasio_db TO recepcionista_role;
 
 GRANT SELECT, INSERT, UPDATE ON
     Socios,
@@ -43,7 +43,7 @@ CREATE USER socio WITH PASSWORD 'socio123';
 CREATE ROLE socio_role;
 GRANT socio_role TO socio;
 
-GRANT CONNECT ON DATABASE gimnasio TO socio_role;
+GRANT CONNECT ON DATABASE gimnasio_db TO socio_role;
 
 -- Sólo puede ver su información y reservar clases
 GRANT SELECT, INSERT ON
@@ -68,7 +68,7 @@ CREATE USER instructor WITH PASSWORD 'instructor123';
 CREATE ROLE instructor_role;
 GRANT instructor_role TO instructor;
 
-GRANT CONNECT ON DATABASE gimnasio TO instructor_role;
+GRANT CONNECT ON DATABASE gimnasio_db TO instructor_role;
 
 -- Puede consultar clases asignadas, horarios y control de asistencia
 GRANT SELECT ON
@@ -94,11 +94,10 @@ CREATE ROLE auditor_role;
 GRANT auditor_role TO auditor;
 
 -- Permitir conexión a la base de datos
-GRANT CONNECT ON DATABASE gimnasio TO auditor_role;
+GRANT CONNECT ON DATABASE gimnasio_db TO auditor_role;
 
 -- Dar acceso de solo lectura a todas las tablas
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO auditor_role;
 
 -- Dar permiso de lectura en las secuencias (por si consulta IDs)
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO auditor_role;
-$$$
