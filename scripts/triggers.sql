@@ -27,6 +27,15 @@ ALTER FUNCTION public.auditoria_funcion()
 
 
 
+-- Cada que se inserta un acceso de socio activa al trigger de registrar_acceso_socio
+
+CREATE TRIGGER trigger_registro_acceso
+AFTER INSERT ON accesosocio
+FOR EACH ROW
+EXECUTE FUNCTION public.registrar_acceso_socio();
+
+
+
 -- FUNCTION: public.registrar_acceso_socio()
 
 -- DROP FUNCTION IF EXISTS public.registrar_acceso_socio();
@@ -46,6 +55,18 @@ $BODY$;
 
 ALTER FUNCTION public.registrar_acceso_socio()
     OWNER TO grupo2;
+
+-- Ejemplo de uso:
+-- INSERT INTO accesosocio(socio_id) VALUES (3);
+
+
+
+-- Cada que se inserta una reserva de clase activa al trigger de verificar_cupo_reserva
+
+CREATE TRIGGER trigger_verificar_cupo
+BEFORE INSERT ON ReservasClase
+FOR EACH ROW
+EXECUTE FUNCTION public.verificar_cupo_reserva();
 
 
 

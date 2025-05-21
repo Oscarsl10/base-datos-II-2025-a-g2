@@ -55,6 +55,15 @@ Registra los socios del gimnasio.
 
 ---
 
+## accessosocio
+
+- **id**: Identificador único (PK)
+- **socio_id**: Identificador llave foránea de socio (FK)
+- **fecha_acceso**: Recoge la fecha de la inserción
+- **status**: Activo/Inactivo
+
+---
+
 ## instructores
 
 Información de los instructores.
@@ -812,7 +821,17 @@ ALTER FUNCTION public.auditoria_funcion() OWNER TO grupo2;
 
 ---
 
-## 2. `registrar_acceso_socio`
+## 2. `trigger_registro_acceso`
+
+- **Cada que se inserta un acceso de socio activa al trigger de registrar_acceso_socio**
+````sql
+CREATE TRIGGER trigger_registro_acceso
+AFTER INSERT ON accesosocio
+FOR EACH ROW
+EXECUTE FUNCTION public.registrar_acceso_socio();
+````
+
+## 2.5. `registrar_acceso_socio`
 
 **Propósito:**  
 Registrar en la tabla `Auditoria` cada vez que un socio accede al sistema.
@@ -853,7 +872,18 @@ ALTER FUNCTION public.registrar_acceso_socio() OWNER TO grupo2;
 
 ---
 
-## 3. `verificar_cupo_reserva`
+## 3. `trigger_verificar_cupo`
+
+- **Cada que se inserta una reserva de clase activa al trigger de verificar_cupo_reserva**
+````sql
+CREATE TRIGGER trigger_verificar_cupo
+BEFORE INSERT ON ReservasClase
+FOR EACH ROW
+EXECUTE FUNCTION public.verificar_cupo_reserva();
+````
+
+
+## 3.5. `verificar_cupo_reserva`
 
 **Propósito:**  
 Evitar que se creen reservas en clases que ya alcanzaron su capacidad máxima.

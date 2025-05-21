@@ -40,6 +40,25 @@ CREATE TABLE IF NOT EXISTS public.socios
 
 TABLESPACE pg_default;
 
+-- Table: public.accesosocio
+
+-- DROP TABLE IF EXISTS public.accesosocio;
+
+CREATE TABLE IF NOT EXISTS public.accesosocio
+(
+    id integer NOT NULL DEFAULT nextval('"accesoSocio_id_seq"'::regclass),
+    socio_id integer NOT NULL,
+    fecha_acceso timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status boolean DEFAULT true,
+    CONSTRAINT socio_id_fk PRIMARY KEY (id),
+    CONSTRAINT socio_id FOREIGN KEY (socio_id)
+        REFERENCES public.socios (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+)
+
+TABLESPACE pg_default;
+
 -- Table: public.instructores
 
 -- DROP TABLE IF EXISTS public.instructores;
